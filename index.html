@@ -6,18 +6,12 @@
     <title>Arbos 1 Year on TikTok</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            /* Smooth Black and White Animated Gradient */
             background: linear-gradient(270deg, #0a0a0a, #333333, #0a0a0a);
             background-size: 400% 400%;
             animation: gradientMove 10s ease infinite;
-            
             color: white;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
@@ -40,9 +34,8 @@
             padding: 0 20px;
         }
 
-        /* Styling for the text that replaces the image */
         #main-title {
-            font-size: clamp(1.5rem, 4vw, 3rem); /* Scales smoothly on mobile and desktop */
+            font-size: clamp(1.5rem, 4vw, 3rem);
             font-weight: 800;
             letter-spacing: 2px;
             text-transform: uppercase;
@@ -51,7 +44,6 @@
             margin-bottom: 10px;
         }
 
-        /* Timer Styling */
         #timer-container {
             margin-top: 20px;
             transition: opacity 1s ease-in-out;
@@ -61,7 +53,6 @@
             font-size: clamp(2rem, 6vw, 4rem);
             font-weight: bold;
             letter-spacing: 2px;
-            /* Keeps numbers from jumping left/right as they change */
             font-variant-numeric: tabular-nums; 
             text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
         }
@@ -80,7 +71,6 @@
             width: clamp(50px, 8vw, 80px);
         }
 
-        /* Hidden text for the finale */
         #finale-text {
             position: absolute;
             font-size: clamp(2rem, 5vw, 5rem);
@@ -96,114 +86,82 @@
             padding: 0 20px;
         }
 
-        /* Classes to trigger animations */
-        .fade-out {
-            opacity: 0 !important;
-        }
-
-        .fade-in {
-            opacity: 1 !important;
-        }
+        .fade-out { opacity: 0 !important; }
+        .fade-in { opacity: 1 !important; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h2 id="main-title">ARBOS'S 1 YEAR ANNIVERSARY LEFT</h2>
-        
-        <div id="timer-container">
-            <div id="timer">00 : 00 : 00 : 00</div>
-            <div class="labels">
-                <span>DAYS</span>
-                <span>HOURS</span>
-                <span>MINS</span>
-                <span>SECS</span>
-            </div>
+<div class="container">
+    <h2 id="main-title">ARBOS'S 1 YEAR ANNIVERSARY LEFT</h2>
+    
+    <div id="timer-container">
+        <div id="timer">00 : 00 : 00 : 00</div>
+        <div class="labels">
+            <span>DAYS</span>
+            <span>HOURS</span>
+            <span>MINS</span>
+            <span>SECS</span>
         </div>
     </div>
+</div>
 
-    <h1 id="finale-text">ARBOS 1 YEAR ON TIKTOK</h1>
+<h1 id="finale-text">ARBOS 1 YEAR ON TIKTOK</h1>
 
-    <script>
-        // --- SETTING THE TIMER ---
-        // 8 DAYS EXACTLY FROM WHEN THE PAGE LOADS
-        let countDownDate = new Date().getTime() + (8 * 24 * 60 * 60 * 1000); 
+<script>
+const countDownDate = new Date("May 25, 2026 00:00:00").getTime();
 
-        const timerElement = document.getElementById("timer");
-        const timerContainer = document.getElementById("timer-container");
-        const mainTitle = document.getElementById("main-title");
-        const finaleText = document.getElementById("finale-text");
+const timerElement = document.getElementById("timer");
+const timerContainer = document.getElementById("timer-container");
+const mainTitle = document.getElementById("main-title");
+const finaleText = document.getElementById("finale-text");
 
-        // The interval that runs every second
-        const x = setInterval(function() {
+const x = setInterval(function() {
+    const now = new Date().getTime();
+    const distance = countDownDate - now;
 
-            const now = new Date().getTime();
-            const distance = countDownDate - now;
+    if (distance <= 0) {
+        clearInterval(x);
+        timerElement.innerHTML = "00 : 00 : 00 : 00";
+        triggerFinale();
+        return;
+    }
 
-            // Math to calculate days, hours, minutes, seconds
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            // Formatting with leading zeros (e.g., "08" instead of "8")
-            const d = String(days).padStart(2, '0');
-            const h = String(hours).padStart(2, '0');
-            const m = String(minutes).padStart(2, '0');
-            const s = String(seconds).padStart(2, '0');
+    timerElement.innerHTML =
+        String(days).padStart(2, '0') + " : " +
+        String(hours).padStart(2, '0') + " : " +
+        String(minutes).padStart(2, '0') + " : " +
+        String(seconds).padStart(2, '0');
 
-            timerElement.innerHTML = `${d} : ${h} : ${m} : ${s}`;
+}, 1000);
 
-            // If the countdown is finished
-            if (distance < 0) {
-                clearInterval(x);
-                timerElement.innerHTML = "00 : 00 : 00 : 00";
-                
-                // Trigger the finale animations
-                triggerFinale();
-            }
-        }, 1000);
+function triggerFinale() {
+    timerContainer.classList.add("fade-out");
+    mainTitle.classList.add("fade-out");
 
-        function triggerFinale() {
-            // Fade out the main title and the timer
-            timerContainer.classList.add("fade-out");
-            mainTitle.classList.add("fade-out");
+    setTimeout(() => {
+        finaleText.classList.add("fade-in");
+    }, 500);
 
-            // Fade in the big text
-            setTimeout(() => {
-                finaleText.classList.add("fade-in");
-            }, 500);
+    launchFireworks();
+}
 
-            // Launch Fireworks
-            launchFireworks();
-        }
+function launchFireworks() {
+    var duration = 5 * 1000;
+    var animationEnd = Date.now() + duration;
 
-        function launchFireworks() {
-            var duration = 5 * 1000;
-            var animationEnd = Date.now() + duration;
-            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+    var interval = setInterval(function() {
+        if (Date.now() > animationEnd) return clearInterval(interval);
 
-            function randomInRange(min, max) {
-                return Math.random() * (max - min) + min;
-            }
+        confetti({ particleCount: 50, spread: 360 });
+    }, 250);
+}
+</script>
 
-            var interval = setInterval(function() {
-                var timeLeft = animationEnd - Date.now();
-
-                if (timeLeft <= 0) {
-                    return clearInterval(interval);
-                }
-
-                var particleCount = 50 * (timeLeft / duration);
-                
-                confetti(Object.assign({}, defaults, { particleCount,
-                    origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }
-                }));
-                confetti(Object.assign({}, defaults, { particleCount,
-                    origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }
-                }));
-            }, 250);
-        }
-    </script>
 </body>
 </html>
