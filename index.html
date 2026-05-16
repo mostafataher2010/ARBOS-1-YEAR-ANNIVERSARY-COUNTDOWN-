@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arbos 1 Year on TikTok</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            /* Smooth Black and White Animated Gradient */
+            background: linear-gradient(270deg, #0a0a0a, #333333, #0a0a0a);
+            background-size: 400% 400%;
+            animation: gradientMove 10s ease infinite;
+            
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            text-align: center;
+            z-index: 10;
+            padding: 0 20px;
+        }
+
+        /* Styling for the text that replaces the image */
+        #main-title {
+            font-size: clamp(1.5rem, 4vw, 3rem); /* Scales smoothly on mobile and desktop */
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
+            transition: opacity 1s ease-in-out;
+            margin-bottom: 10px;
+        }
+
+        /* Timer Styling */
+        #timer-container {
+            margin-top: 20px;
+            transition: opacity 1s ease-in-out;
+        }
+
+        #timer {
+            font-size: clamp(2rem, 6vw, 4rem);
+            font-weight: bold;
+            letter-spacing: 2px;
+            /* Keeps numbers from jumping left/right as they change */
+            font-variant-numeric: tabular-nums; 
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .labels {
+            display: flex;
+            justify-content: center;
+            gap: 2vw;
+            margin-top: 5px;
+            font-size: clamp(0.7rem, 2vw, 1rem);
+            color: #b3b3b3;
+            letter-spacing: 1px;
+        }
+
+        .labels span {
+            width: clamp(50px, 8vw, 80px);
+        }
+
+        /* Hidden text for the finale */
+        #finale-text {
+            position: absolute;
+            font-size: clamp(2rem, 5vw, 5rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 2.5s ease-in-out;
+            text-align: center;
+            width: 100%;
+            padding: 0 20px;
+        }
+
+        /* Classes to trigger animations */
+        .fade-out {
+            opacity: 0 !important;
+        }
+
+        .fade-in {
+            opacity: 1 !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2 id="main-title">ARBOS'S 1 YEAR ANNIVERSARY LEFT</h2>
+        
+        <div id="timer-container">
+            <div id="timer">00 : 00 : 00 : 00</div>
+            <div class="labels">
+                <span>DAYS</span>
+                <span>HOURS</span>
+                <span>MINS</span>
+                <span>SECS</span>
+            </div>
+        </div>
+    </div>
+
+    <h1 id="finale-text">ARBOS 1 YEAR ON TIKTOK</h1>
+
+    <script>
+        // --- SETTING THE TIMER ---
+        // 8 DAYS EXACTLY FROM WHEN THE PAGE LOADS
+        let countDownDate = new Date().getTime() + (8 * 24 * 60 * 60 * 1000); 
+
+        const timerElement = document.getElementById("timer");
+        const timerContainer = document.getElementById("timer-container");
+        const mainTitle = document.getElementById("main-title");
+        const finaleText = document.getElementById("finale-text");
+
+        // The interval that runs every second
+        const x = setInterval(function() {
+
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
+
+            // Math to calculate days, hours, minutes, seconds
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Formatting with leading zeros (e.g., "08" instead of "8")
+            const d = String(days).padStart(2, '0');
+            const h = String(hours).padStart(2, '0');
+            const m = String(minutes).padStart(2, '0');
+            const s = String(seconds).padStart(2, '0');
+
+            timerElement.innerHTML = `${d} : ${h} : ${m} : ${s}`;
+
+            // If the countdown is finished
+            if (distance < 0) {
+                clearInterval(x);
+                timerElement.innerHTML = "00 : 00 : 00 : 00";
+                
+                // Trigger the finale animations
+                triggerFinale();
+            }
+        }, 1000);
+
+        function triggerFinale() {
+            // Fade out the main title and the timer
+            timerContainer.classList.add("fade-out");
+            mainTitle.classList.add("fade-out");
+
+            // Fade in the big text
+            setTimeout(() => {
+                finaleText.classList.add("fade-in");
+            }, 500);
+
+            // Launch Fireworks
+            launchFireworks();
+        }
+
+        function launchFireworks() {
+            var duration = 5 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            function randomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            var interval = setInterval(function() {
+                var timeLeft = animationEnd - Date.now();
+
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+
+                var particleCount = 50 * (timeLeft / duration);
+                
+                confetti(Object.assign({}, defaults, { particleCount,
+                    origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }
+                }));
+                confetti(Object.assign({}, defaults, { particleCount,
+                    origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }
+                }));
+            }, 250);
+        }
+    </script>
+</body>
+</html>
