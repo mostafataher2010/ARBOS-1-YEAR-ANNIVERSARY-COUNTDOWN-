@@ -1,165 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arbos 1 Year on TikTok</title>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arbos 1 Year on TikTok</title>
 
-        body {
-            background: linear-gradient(270deg, #0a0a0a, #333333, #0a0a0a);
-            background-size: 400% 400%;
-            animation: gradientMove 10s ease infinite;
-            color: white;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            overflow: hidden;
-        }
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-        .container {
-            text-align: center;
-            z-index: 10;
-            padding: 0 20px;
-        }
+body {
+    background: linear-gradient(270deg, #0a0a0a, #333333, #0a0a0a);
+    background-size: 400% 400%;
+    animation: gradientMove 10s ease infinite;
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
+}
 
-        #main-title {
-            font-size: clamp(1.5rem, 4vw, 3rem);
-            font-weight: 800;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
-            transition: opacity 1s ease-in-out;
-            margin-bottom: 10px;
-        }
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
 
-        #timer-container {
-            margin-top: 20px;
-            transition: opacity 1s ease-in-out;
-        }
+.container { text-align: center; }
 
-        #timer {
-            font-size: clamp(2rem, 6vw, 4rem);
-            font-weight: bold;
-            letter-spacing: 2px;
-            font-variant-numeric: tabular-nums; 
-            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-        }
+#main-title {
+    font-size: clamp(1.5rem, 4vw, 3rem);
+    margin-bottom: 15px;
+}
 
-        .labels {
-            display: flex;
-            justify-content: center;
-            gap: 2vw;
-            margin-top: 5px;
-            font-size: clamp(0.7rem, 2vw, 1rem);
-            color: #b3b3b3;
-            letter-spacing: 1px;
-        }
+#timer {
+    font-size: clamp(2rem, 6vw, 4rem);
+    font-weight: bold;
+    font-variant-numeric: tabular-nums;
+}
 
-        .labels span {
-            width: clamp(50px, 8vw, 80px);
-        }
+.labels {
+    margin-top: 5px;
+    font-size: 0.9rem;
+    color: #aaa;
+}
 
-        #finale-text {
-            position: absolute;
-            font-size: clamp(2rem, 5vw, 5rem);
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 2.5s ease-in-out;
-            text-align: center;
-            width: 100%;
-            padding: 0 20px;
-        }
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    background: white;
+    color: black;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+}
 
-        .fade-out { opacity: 0 !important; }
-        .fade-in { opacity: 1 !important; }
-    </style>
+#finale-text {
+    position: absolute;
+    font-size: clamp(2rem, 6vw, 5rem);
+    opacity: 0;
+    transition: 2s;
+}
+
+.show { opacity: 1; }
+.hide { opacity: 0; }
+</style>
 </head>
+
 <body>
 
 <div class="container">
     <h2 id="main-title">ARBOS'S 1 YEAR ANNIVERSARY LEFT</h2>
-    
-    <div id="timer-container">
-        <div id="timer">00 : 00 : 00 : 00</div>
-        <div class="labels">
-            <span>DAYS</span>
-            <span>HOURS</span>
-            <span>MINS</span>
-            <span>SECS</span>
-        </div>
-    </div>
+    <div id="timer">00 : 00 : 00 : 00</div>
+    <div class="labels">DAYS : HOURS : MINS : SECS</div>
+
+    <button onclick="sharePage()">SHARE 🎉</button>
 </div>
 
-<h1 id="finale-text">ARBOS 1 YEAR ON TIKTOK</h1>
+<h1 id="finale-text">🎉 ARBOS 1 YEAR 🎉</h1>
+
+<audio id="celebration-sound" src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3"></audio>
 
 <script>
-const countDownDate = new Date("May 25, 2026 00:00:00").getTime();
+// 🇪🇬 Egypt time
+const target = new Date("2026-05-25T00:00:00+02:00").getTime();
 
-const timerElement = document.getElementById("timer");
-const timerContainer = document.getElementById("timer-container");
-const mainTitle = document.getElementById("main-title");
+const timer = document.getElementById("timer");
 const finaleText = document.getElementById("finale-text");
+const mainTitle = document.getElementById("main-title");
+const sound = document.getElementById("celebration-sound");
 
-const x = setInterval(function() {
-    const now = new Date().getTime();
-    const distance = countDownDate - now;
+let finished = false;
 
-    if (distance <= 0) {
-        clearInterval(x);
-        timerElement.innerHTML = "00 : 00 : 00 : 00";
-        triggerFinale();
+function update() {
+    const now = Date.now();
+    const diff = target - now;
+
+    if (diff <= 0 && !finished) {
+        finished = true;
+        timer.innerHTML = "00 : 00 : 00 : 00";
+        startCelebration();
         return;
     }
 
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
 
-    timerElement.innerHTML =
-        String(days).padStart(2, '0') + " : " +
-        String(hours).padStart(2, '0') + " : " +
-        String(minutes).padStart(2, '0') + " : " +
-        String(seconds).padStart(2, '0');
-
-}, 1000);
-
-function triggerFinale() {
-    timerContainer.classList.add("fade-out");
-    mainTitle.classList.add("fade-out");
-
-    setTimeout(() => {
-        finaleText.classList.add("fade-in");
-    }, 500);
-
-    launchFireworks();
+    timer.innerHTML =
+        String(d).padStart(2,'0') + " : " +
+        String(h).padStart(2,'0') + " : " +
+        String(m).padStart(2,'0') + " : " +
+        String(s).padStart(2,'0');
 }
 
-function launchFireworks() {
-    var duration = 5 * 1000;
-    var animationEnd = Date.now() + duration;
+// run instantly + every second
+update();
+setInterval(update, 1000);
 
-    var interval = setInterval(function() {
-        if (Date.now() > animationEnd) return clearInterval(interval);
+// 🎆 celebration
+function startCelebration() {
+    mainTitle.classList.add("hide");
+    finaleText.classList.add("show");
 
-        confetti({ particleCount: 50, spread: 360 });
+    sound.play();
+
+    const duration = 5000;
+    const end = Date.now() + duration;
+
+    const interval = setInterval(() => {
+        if (Date.now() > end) return clearInterval(interval);
+
+        confetti({ particleCount: 80, spread: 120 });
     }, 250);
+}
+
+// 📲 share button
+function sharePage() {
+    if (navigator.share) {
+        navigator.share({
+            title: "ARBOS 1 YEAR",
+            text: "Join the countdown 🎉",
+            url: window.location.href
+        });
+    } else {
+        alert("Copy this link: " + window.location.href);
+    }
 }
 </script>
 
